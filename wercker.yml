@@ -12,7 +12,7 @@ build:
         code: |
             while ! $(python -c "import socket; soc=socket.socket(); soc.connect(('$POSTGRES_PORT_5432_TCP_ADDR', $POSTGRES_PORT_5432_TCP_PORT))"); do sleep 3; done
 
-test:
+test1:
     steps:
 
     - pip-install
@@ -36,6 +36,22 @@ test:
         name: Run Functional tests
         code: |
             python tests.py -v FunctionalTests
+
+
+test2:
+    steps:
+
+    - pip-install
+
+    - script:
+        name: "Set environment variables"
+        code: |
+            export PG_HOST=$POSTGRES_PORT_5432_TCP_ADDR
+            export PG_PORT=$POSTGRES_PORT_5432_TCP_PORT
+            export PG_USER=$POSTGRES_ENV_POSTGRES_USER
+            export PG_PASS=$POSTGRES_ENV_POSTGRES_PASSWORD
+            export FLASK_APP=namemycat.py
+            export FLASK_DEBUG=0
 
     - script:
         name: Check code coverage
