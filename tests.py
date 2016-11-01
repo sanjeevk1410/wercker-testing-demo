@@ -96,7 +96,7 @@ class IntegrationTests(unittest.TestCase):
 
                 last_name = this_name
                 # Oops, You've caught me trying to make our tests take longer...
-                time.sleep(0.1)
+                time.sleep(0.5)
 
     def test_homepage(self):
         """Test for a 200 from a homepage GET request"""
@@ -179,7 +179,7 @@ class FunctionalTests(LiveServerTestCase):
             if response.content == "Cat" or response.status_code != 200:
                 return False
             # Oops, You've caught me trying to make our tests take longer...
-            time.sleep(0.1)
+            time.sleep(0.5)
 
 
 if __name__ == '__main__':
