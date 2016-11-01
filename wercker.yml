@@ -28,11 +28,6 @@ test:
             export FLASK_DEBUG=0
 
     - script:
-        name: Initialise database
-        code: |
-            flask initdb
-
-    - script:
         name: Run Integration tests
         code: |
             python tests.py -v IntegrationTests
