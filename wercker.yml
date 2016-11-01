@@ -7,17 +7,16 @@ services:
 
 build:
     steps:
-    - virtualenv:
-        virtualenv_location: ./env
-    - pip-install
-    - script:
+        name: "Wait for Postgres to come up"
         code: |
-                cp -r ./ $WERCKER_OUTPUT_DIR
+        while ! nc -q 1 POSTGRES_PORT_5432_TCP_ADDR $POSTGRES_PORT_5432_TCP_PORT
+        </dev/null; do sleep 3; done
 
 test:
     steps:
-    - virtualenv:
-        virtualenv_location: ./env
+
+    - pip-install
+
     - script:
         name: "Set environment variables"
         code: |
