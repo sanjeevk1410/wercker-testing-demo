@@ -10,8 +10,7 @@ build:
     - script:
         name: "Wait for Postgres to come up"
         code: |
-            while ! nc -q 1 POSTGRES_PORT_5432_TCP_ADDR $POSTGRES_PORT_5432_TCP_PORT
-            </dev/null; do sleep 3; done
+            while ! $(python -c "import socket; soc=socket.socket(); soc.connect(('$POSTGRES_PORT_5432_TCP_ADDR', $POSTGRES_PORT_5432_TCP_PORT))"); do sleep 3; done
 
 test:
     steps:
