@@ -9,8 +9,8 @@ build:
     steps:
         name: "Wait for Postgres to come up"
         code: |
-        while ! nc -q 1 POSTGRES_PORT_5432_TCP_ADDR $POSTGRES_PORT_5432_TCP_PORT
-        </dev/null; do sleep 3; done
+            while ! nc -q 1 POSTGRES_PORT_5432_TCP_ADDR $POSTGRES_PORT_5432_TCP_PORT
+            </dev/null; do sleep 3; done
 
 test:
     steps:
