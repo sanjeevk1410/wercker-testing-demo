@@ -5,6 +5,13 @@ services:
             POSTGRES_PASSWORD: password
             POSTGRES_USER: namemycat
 
+build:
+    steps:
+    - pip-install
+    - script:
+        code: |
+            cp -r ./ $WERCKER_OUTPUT_DIR
+
 test:
     steps:
 
@@ -17,8 +24,6 @@ test:
             export PG_PASS=$POSTGRES_ENV_POSTGRES_PASSWORD
             export FLASK_APP=namemycat.py
             export FLASK_DEBUG=0
-
-    - pip-install
 
     - script:
         name: Initialise database
@@ -41,16 +46,13 @@ test:
             coverage run --include namemycat.py tests.py
             coverage report
 
-build:
+deploy:
     steps:
-    - pip-install
 
     - script:
         code: |
             echo "This is where we would build and push our docker image to a registry"
 
-deploy:
-    steps:
     - script:
         code: |
             echo "This is where we would tell Kubernetes to deploy our container"
