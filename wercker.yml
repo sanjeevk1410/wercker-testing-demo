@@ -7,14 +7,15 @@ services:
 
 build:
     steps:
+    - virtualenv
     - pip-install
     - script:
         code: |
-            cp -r ./ $WERCKER_OUTPUT_DIR
+                cp -r ./ $WERCKER_OUTPUT_DIR
 
 test:
     steps:
-
+    - virtualenv
     - script:
         name: "Set environment variables"
         code: |
