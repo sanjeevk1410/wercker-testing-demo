@@ -1,0 +1,56 @@
+box: python:2.7
+services:
+    -   id: postgres
+        env:
+            POSTGRES_PASSWORD: password
+            POSTGRES_USER: namemycat
+
+test:
+    steps:
+
+    - script:
+        name: "Set environment variables"
+        code: |
+            export PG_HOST=$POSTGRES_PORT_5432_TCP_ADDR
+            export PG_PORT=$POSTGRES_PORT_5432_TCP_PORT
+            export PG_USER=$POSTGRES_ENV_POSTGRES_USER
+            export PG_PASS=$POSTGRES_ENV_POSTGRES_PASSWORD
+            export FLASK_APP=namemycat.py
+            export FLASK_DEBUG=0
+
+    - pip-install
+
+    - script:
+        name: Initialise database
+        code: |
+            flask initdb
+
+    - script:
+        name: Run Integration tests
+        code: |
+            python tests.py -v IntegrationTests
+
+    - script:
+        name: Run Functional tests
+        code: |
+            python tests.py -v FunctionalTests
+
+    - script:
+        name: Check code coverage
+        code: |
+            coverage run --include namemycat.py tests.py
+            coverage report
+
+build:
+    steps:
+    - pip-install
+
+    - script:
+        code: |
+            echo "This is where we would build and push our docker image to a registry"
+
+deploy:
+    steps:
+    - script:
+        code: |
+            echo "This is where we would tell Kubernetes to deploy our container"
