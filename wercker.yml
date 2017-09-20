@@ -52,4 +52,4 @@ deploy:
 
     - script:
         code: |
-            echo "This is where we would tell Kubernetes to deploy our container"
+            echo "This is where we would tell Kubernetes to deploy our containerA"
